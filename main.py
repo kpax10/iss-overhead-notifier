@@ -1,9 +1,12 @@
 import requests
 from datetime import datetime, timezone
 import time
+import smtplib
 
 MY_LAT = 33.772948  # Your latitude
 MY_LONG = -117.859276  # Your longitude
+MY_EMAIL = "timmyt345345@gmail.com"
+MY_PASSWORD = "qbtnsxioriyqxijz"
 
 
 #Your position is within +5 or -5 degrees of the ISS position.
@@ -21,6 +24,17 @@ def is_within_range():
 def is_dark():
     time_now = datetime.now(timezone.utc)
     return sunset < time_now.hour < sunrise
+
+
+def send_email():
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()
+        connection.login(user=MY_EMAIL, password=MY_PASSWORD)
+        connection.sendmail(
+            from_addr=MY_EMAIL,
+            to_addrs='notxap55@yahoo.com',
+            msg=f"Subject:ISS IS OVERHEAD!\n\nLook up!"
+        )
 
 
 parameters = {
@@ -45,9 +59,8 @@ sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 while True:
 
     if is_within_range() and is_dark():
-        print('is within range, and is also dark!')
-        # do something
+        send_email()
+        time.sleep(21600)
 
-
-    time.sleep(5)
+    time.sleep(60)
 
