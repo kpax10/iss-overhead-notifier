@@ -9,7 +9,7 @@ MY_EMAIL = "timmyt345345@gmail.com"
 MY_PASSWORD = "qbtnsxioriyqxijz"
 
 
-def is_within_range():
+def iss_within_range():
     print('checking...')
     response = requests.get(url="http://api.open-notify.org/iss-now.json")
     response.raise_for_status()
@@ -47,7 +47,7 @@ def send_email():
 
 
 while True:
-    if is_within_range() and is_dark():
+    if iss_within_range() and is_dark():
         send_email()
         time.sleep(21600)
     time.sleep(60)
